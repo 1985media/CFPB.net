@@ -1,0 +1,16 @@
+﻿@using Newtonsoft.Json.Linq
+@model Newtonsoft.Json.Linq.JObject
+
+<ul>
+@foreach (var o in Model)
+{
+    <li>@o.Key</li>
+    if (o.Value.HasValues)
+    {
+
+        Html.RenderPartial("JsonView", JObject.Parse((string) o.Value));
+
+    }
+}
+    
+</ul>

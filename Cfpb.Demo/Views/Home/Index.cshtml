@@ -1,0 +1,188 @@
+﻿@model Cfpb.Result<Cfpb.Hdma.Lar.LarObject>
+
+@{
+    ViewBag.Title = "title";
+}
+<div id="medianIncomes" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<div id="incomes" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<div id="incomeArea" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<ul>
+    @*@foreach (var row in Model.Results)
+    {
+        <li>
+            <ul>
+                <li>loan amount - $@(row.LoanAmount000s)k</li>
+                <li>income $@(row.ApplicantIncome000s)k</li>
+                <li>(@row.CoApplicantEthnicity) @row.CoApplicantEthnicityName</li>
+                <li>(@row.DenialReason1) @row.DenialReasonName1</li>
+                <li>(@row.DenialReason2) @row.DenialReasonName2</li>
+                <li>(@row.DenialReason3) @row.DenialReasonName3</li>
+                <li>median income $@row.HudMedianFamilyIncome</li>
+                <li>(@row.LoanType) @row.LoanTypeName</li>
+                <li>(@row.OwnerOccupancy) @row.OwnerOccupancyName</li>
+                <li>(@row.PropertyType) @row.PropertyTypeName</li>
+                <li>(@row.Msamd) @row.MsamdName</li>
+                <li>(@row.CountyCode) @row.CountyName</li>
+                <li>(@row.StateCode) @row.StateAbbr - @row.StateName</li>
+                <li>@row.AsOfYear</li>
+            </ul>
+        </li>
+    }*@
+</ul>
+<script>
+
+    var medianIncomes = { data: [], years: [] };
+
+    @foreach (Tuple<int, int> item in ViewBag.Incomes)
+    {
+        <text>
+            medianIncomes.data.push(@(item.Item1));
+            medianIncomes.years.push(@(item.Item2));
+        </text>
+    }
+
+    var incomes = { data: [], years: [] };
+
+    @foreach (Tuple<int, List<int>> item in ViewBag.BoxChartData)
+    {
+        <text>
+            incomes.data.push([@(Html.Raw(string.Join(",", item.Item2)))]);
+            incomes.years.push(@(item.Item1));
+        </text>
+    }
+
+    var incomes2 = { data: [], years: [] };
+
+    @foreach (Tuple<int, List<int>> item in ViewBag.AreaChartData)
+    {
+        <text>
+    incomes2.data.push({ name: '@(item.Item1)', data: [@(Html.Raw(string.Join(",", item.Item2)))] });
+    incomes2.years.push(@(item.Item1));
+        </text>
+    }
+
+    $(function () {
+        $('#medianIncomes').highcharts({
+            title: {
+                text: 'Median Incomes by Year',
+            },
+            subtitle: {
+                text: 'Source: CFPB',
+            },
+            xAxis: {
+                categories: medianIncomes.data
+            },
+            yAxis: {
+                title: {
+                    text: 'Dollars ($)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valuePrefix: '$'
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [{
+                name: 'Median Income',
+                data: medianIncomes.years
+            }]
+        });
+
+        $('#incomes').highcharts({
+
+            chart: {
+                type: 'boxplot'
+            },
+
+            title: {
+                text: 'Highcharts Box Plot Example'
+            },
+
+            legend: {
+                enabled: false
+            },
+
+            xAxis: {
+                categories: incomes.years,
+                title: {
+                    text: 'Years'
+                }
+            },
+
+            yAxis: {
+                title: {
+                    text: 'Income ($)'
+                }
+            },
+
+            series: [{
+                name: 'Incoles',
+                data: incomes.data,
+                tooltip: {
+                    headerFormat: '<em>Year: {point.key}</em><br/>'
+                }
+            }]
+
+        });
+        
+        $('#incomeArea').highcharts({
+            chart: {
+                type: 'area'
+            },
+            title: {
+                text: 'Income distribution over year'
+            },
+            subtitle: {
+                text: 'Source: CFPB'
+            },
+            xAxis: {
+                labels: {
+                    formatter: function () {
+                        return '$' + this.value + 'k'; // clean, unformatted number for year
+                    }
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'number of people'
+                },
+                labels: {
+                    formatter: function () {
+                        return this.value;
+                    }
+                }
+            },
+            tooltip: {
+                pointFormat: '{point.y:,.0f} people have income ${point.x}k in {series.name}'
+            },
+            plotOptions: {
+                area: {
+                    pointStart: 0,
+                    marker: {
+                        enabled: false,
+                        symbol: 'circle',
+                        radius: 2,
+                        states: {
+                            hover: {
+                                enabled: true
+                            }
+                        }
+                    }
+                }
+            },
+            series: incomes2.data
+        });
+    });
+
+</script>
