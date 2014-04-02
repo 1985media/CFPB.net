@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Cfpb.Demo.App_Start
+namespace CfpbDemo.App_Start
 {
 	public class FilterConfig
 	{

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Cfpb.Hdma.Lar;
 
-namespace Cfpb.Demo.Controllers
+namespace CfpbDemo.Controllers
 {
 	public class HomeController : Controller
 	{

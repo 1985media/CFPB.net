@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 
-namespace Cfpb.Demo.App_Start
+namespace CfpbDemo.App_Start
 {
 	public static class WebApiConfig
 	{

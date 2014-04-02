@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Cfpb.Demo.App_Start
+namespace CfpbDemo.App_Start
 {
 	public class RouteConfig
 	{

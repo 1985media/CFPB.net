@@ -1,0 +1,6 @@
+C:\Users\Brandon Fisch\Documents\GitHub\CFPB.net\Cfpb\bin\Debug\Cfpb.dll
+C:\Users\Brandon Fisch\Documents\GitHub\CFPB.net\Cfpb\bin\Debug\Cfpb.pdb
+C:\Users\Brandon Fisch\Documents\GitHub\CFPB.net\Cfpb\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Brandon Fisch\Documents\GitHub\CFPB.net\Cfpb\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Brandon Fisch\Documents\GitHub\CFPB.net\Cfpb\obj\Debug\Cfpb.dll
+C:\Users\Brandon Fisch\Documents\GitHub\CFPB.net\Cfpb\obj\Debug\Cfpb.pdb
